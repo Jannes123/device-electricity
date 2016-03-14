@@ -13,15 +13,19 @@ public class SocketSender extends AsyncTask<Void, Void, Void> {
 
     private String message;
     private OutputStream os;
-    public SocketSender(String message, OutputStream os){
+    private SocketOperator socketOperator;
+
+    public SocketSender(String message, OutputStream os, SocketOperator socketOperator){
         this.message = message;
         this.os = os;
+        this.socketOperator = socketOperator;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         try {
-            os.write(message.getBytes());
+            os.write(message.getBytes("US-ASCII"));
+            os.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,6 +35,6 @@ public class SocketSender extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        //TODO
+        socketOperator.onMessageSent();
     }
 }

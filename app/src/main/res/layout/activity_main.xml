@@ -22,9 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        layout="@layout/content_loading"
-        android:id="@+id/content_loading"
-        />
+    <include layout="@layout/content_loading"/>
+
+    <include layout="@layout/content_main" />
 
 </android.support.design.widget.CoordinatorLayout>
