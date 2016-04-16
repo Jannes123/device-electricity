@@ -24,7 +24,7 @@ public class XMLWriter {
         manager = context.getAssets();
     }
 
-    public String getICEEVRequest(int amount){
+    public String getICEEVRequest(String meterNR, String amount){
         try {
             AssetManager am = context.getAssets();
             InputStream is = am.open(Utils.FILE_ICEEV);
@@ -55,7 +55,7 @@ public class XMLWriter {
             Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"));
             long utc = cal.getTimeInMillis();
 
-            return String.format(msg, date, time, "1233214569527", amount);
+            return String.format(msg, date, time, utc, meterNR, amount);
         } catch (Exception e) {
             e.printStackTrace();
         }

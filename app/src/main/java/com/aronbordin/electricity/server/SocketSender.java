@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
 /**
  * This AsyncTask sends the chat message through the output stream.
@@ -12,24 +13,19 @@ import java.io.OutputStream;
 public class SocketSender extends AsyncTask<Void, Void, Void> {
 
     private String message;
-    private OutputStream os;
+    private PrintWriter out;
     private SocketOperator socketOperator;
 
     public SocketSender(String message, OutputStream os, SocketOperator socketOperator){
         this.message = message;
-        this.os = os;
+        out = new PrintWriter(os);
         this.socketOperator = socketOperator;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        try {
-            os.write(message.getBytes("US-ASCII"));
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        out.write(message);
+        out.flush();
         return null;
     }
 

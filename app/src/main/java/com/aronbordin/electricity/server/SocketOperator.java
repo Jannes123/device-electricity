@@ -38,8 +38,8 @@ public class SocketOperator extends AsyncTask<Void, Void, Void> {
     private OutputStream os;
     private SSLSocket sslSocket;
     private SocketOperatorInterface listener;
-    private boolean connected = false;
-    private SocketReceiver socketReceiver = null;
+    private boolean connected;
+    private SocketReceiver socketReceiver;
 
     public interface SocketOperatorInterface extends EventListener {
         void onConnect();

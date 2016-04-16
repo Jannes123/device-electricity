@@ -1,8 +1,11 @@
 package com.aronbordin.electricity.server;
 
 import android.os.AsyncTask;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 
 /**
@@ -13,31 +16,27 @@ import java.net.UnknownHostException;
 public class SocketReceiver extends AsyncTask<Void, Void, Void> {
 
     private String message = "";
-    private String content = "";
-    private InputStream is;
+    private BufferedReader in;
     private SocketOperator socketOperator;
 
     public SocketReceiver(InputStream is, SocketOperator socketOperator){
         super();
-        this.is = is;
+        in = new BufferedReader(new InputStreamReader(is));
         this.socketOperator = socketOperator;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         while (true) {
+            StringBuilder sb = new StringBuilder();
             try {
-                byte buffer[] = new byte[2048];
-
-                int ok = is.read(buffer);
-                message = new String(buffer);
-                if (message.trim().isEmpty() && !content.isEmpty()) {
-                    publishProgress();
-                    Thread.sleep(50);
-                    continue;
+                String line;
+                while((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
-                content += message.trim();
-
+                message = sb.toString();
+                if (!message.isEmpty())
+                    publishProgress();
                 Thread.sleep(50);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -47,8 +46,9 @@ public class SocketReceiver extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onProgressUpdate(Void... values) {
-        socketOperator.onReceiveMessage(content);
-        content = "";
+
+        socketOperator.onReceiveMessage(message);
+        message = "";
     }
 
 }

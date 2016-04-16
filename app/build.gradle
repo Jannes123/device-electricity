@@ -25,4 +25,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.jpardogo.googleprogressbar:library:1.2.0'
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
+    compile ('com.thoughtworks.xstream:xstream:1.4.4') {
+        exclude group: 'xmlpull', module: 'xmlpull'
+    }
+    compile 'com.github.fengdai:alertdialogpro-theme-material:0.2.6'
 }
